@@ -13,7 +13,7 @@ public class CheckboxControl extends Control{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void CheckItem(String Value) throws InterruptedException {
+	public void CheckItem() throws InterruptedException {
 		Thread.sleep(1000);
 		WebDriverWait wait = new WebDriverWait(webdriver, 1000);
 		WebElement checkBox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(XPath)));

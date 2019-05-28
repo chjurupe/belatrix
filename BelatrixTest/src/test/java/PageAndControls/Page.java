@@ -1,4 +1,4 @@
-package steps;
+package PageAndControls;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

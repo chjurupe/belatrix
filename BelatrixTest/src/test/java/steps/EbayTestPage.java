@@ -3,6 +3,7 @@ package steps;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
+import PageAndControls.Page;
 /*import cucumber.api.PendingException;*/
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

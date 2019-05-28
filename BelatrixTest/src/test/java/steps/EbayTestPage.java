@@ -12,6 +12,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import PageAndControls.CheckboxControl;
 import PageAndControls.LabelControl;
 import PageAndControls.Page;
+import PageAndControls.SelectControl;
 import PageAndControls.TextControl;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -31,6 +32,7 @@ public class EbayTestPage extends Page
 	private String XPathBrandFilterCarousell= "//a[@class='srp-carousel-list__item-link--truncated-small-item']/div[text()='REPLACEBYBRAND']";
 	private String XPathStatusSearchText = "//h3[text()='Estado']//ancestor::li[1]//span[text()='REPLACEBYSTATUS']//ancestor::li[1]";
 	private String XPathRecordsLabel = "//h1[@class='srp-controls__count-heading']";
+	private String XPathSort = "//div[@id='w4-w3']/button"; 
 	
 
 	private String BrandFilterValue = "";
@@ -96,4 +98,18 @@ public class EbayTestPage extends Page
 		String value = labelControl.getValue();
 		System.out.println("Number of records: " + value);
     }
+	
+	@When("^User orber by \"([^\"]*)\"$")
+    public void user_order_by(String OrderTypeSelected) throws Throwable {
+		SelectControl selectControl = new SelectControl(webdriver, XPathSort);
+		selectControl.selectValueFromBtn(OrderTypeSelected);
+		
+    }
+	
+	@And("^The Price of First \"([^\"]*)\" Records are printed$")
+    public void print_records_price(int Records) throws Throwable {
+
+		
+    }	
+	
 }

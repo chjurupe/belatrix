@@ -9,7 +9,10 @@ Then Ebay Page displays the brand list
 When User select Status "<StatusSelected>"
 Then Ebay Page displays the list
 And Number of results is printed
+When User orber by "<OrderTypeSelected>"
+Then Ebay Page displays the list
+And The Price of First "<Records>" Records are printed
 
 Examples:
-|ItemToSearch	|BrandSelected	|StatusSelected	|
-|Shoes			|PUMA			|Nuevo con defectos|
+|ItemToSearch	|BrandSelected	|StatusSelected		|OrderTypeSelected					|Records|
+|Shoes			|PUMA			|Nuevo				|Precio + Envío: más bajo primero	|5		|

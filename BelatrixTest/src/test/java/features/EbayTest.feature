@@ -8,6 +8,7 @@ When User select Brand "<BrandSelected>"
 Then Ebay Page displays the brand list
 When User select Status "<StatusSelected>"
 Then Ebay Page displays the list
+And Number of results is printed
 
 Examples:
 |ItemToSearch	|BrandSelected	|StatusSelected	|

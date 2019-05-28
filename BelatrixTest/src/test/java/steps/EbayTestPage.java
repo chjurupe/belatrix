@@ -10,8 +10,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import PageAndControls.CheckboxControl;
+import PageAndControls.LabelControl;
 import PageAndControls.Page;
 import PageAndControls.TextControl;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -28,16 +30,15 @@ public class EbayTestPage extends Page
 	private String XPathBrandSearchText = "//li[@name='Brand']//input[@type='checkbox'][@aria-label='REPLACEBYBRAND']";
 	private String XPathBrandFilterCarousell= "//a[@class='srp-carousel-list__item-link--truncated-small-item']/div[text()='REPLACEBYBRAND']";
 	private String XPathStatusSearchText = "//h3[text()='Estado']//ancestor::li[1]//span[text()='REPLACEBYSTATUS']//ancestor::li[1]";
+	private String XPathRecordsLabel = "//h1[@class='srp-controls__count-heading']";
 	
-	
-	
-	
-	
+
 	private String BrandFilterValue = "";
 	
 	//---- Controls Definitions ----//
 	TextControl textControl;
 	CheckboxControl checkboxControl;
+	LabelControl labelControl;
 	
 
 	public EbayTestPage() {
@@ -89,4 +90,10 @@ public class EbayTestPage extends Page
 		checkboxControl.CheckItem();
     }
 
+	@And("^Number of results is printed$")
+    public void user_sprint_results() throws Throwable {
+		labelControl = new LabelControl(webdriver, XPathRecordsLabel);
+		String value = labelControl.getValue();
+		System.out.println("Number of records: " + value);
+    }
 }

@@ -23,21 +23,40 @@
       <scope>test</scope>
     </dependency>
     
-    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
 	<dependency>
-	    <groupId>io.cucumber</groupId>
-	    <artifactId>cucumber-java</artifactId>
-	    <version>2.0.0</version>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+	</dependency>
+
+	<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
 	</dependency>
 	
-	<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
-	<dependency>
-	    <groupId>io.cucumber</groupId>
-	    <artifactId>cucumber-junit</artifactId>
-	    <version>4.3.1</version>
-	    <scope>test</scope>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
 	</dependency>
-   
+	
+			<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		
+    <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-picocontainer</artifactId>
+        <version>RELEASE</version>
+        <scope>test</scope>
+    </dependency>
     
   </dependencies>
 </project>

@@ -1,6 +1,12 @@
 Feature: Automation Exam
 
-Scenario: Open Ebay Page
+Scenario Outline: Belatrix exam
 Given User is on Ebay Page
-When User select shoes Category
-Then Ebay Page displays shoes category
+When User search for "<ItemToSearch>"
+Then Ebay Page displays the list
+When User select Brand "<BrandSelected>"
+Then Ebay Page displays the brand list
+
+Examples:
+|ItemToSearch	|BrandSelected	|
+|Shoes			|Puma			|

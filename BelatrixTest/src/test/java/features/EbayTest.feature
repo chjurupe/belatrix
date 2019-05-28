@@ -11,7 +11,8 @@ Then Ebay Page displays the list
 And Number of results is printed
 When User orber by "<OrderTypeSelected>"
 Then Ebay Page displays the list
-And The Price of First "<Records>" Records are printed
+When User buy The first "<Records>" Records
+#And The Price of First "<Records>" Records are printed
 
 Examples:
 |ItemToSearch	|BrandSelected	|StatusSelected		|OrderTypeSelected					|Records|

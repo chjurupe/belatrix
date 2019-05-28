@@ -1,14 +1,9 @@
 package steps;
 
-import java.awt.Point;
+import java.util.List;
 
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-
 import PageAndControls.CheckboxControl;
 import PageAndControls.LabelControl;
 import PageAndControls.Page;
@@ -32,15 +27,11 @@ public class EbayTestPage extends Page
 	private String XPathBrandFilterCarousell= "//a[@class='srp-carousel-list__item-link--truncated-small-item']/div[text()='REPLACEBYBRAND']";
 	private String XPathStatusSearchText = "//h3[text()='Estado']//ancestor::li[1]//span[text()='REPLACEBYSTATUS']//ancestor::li[1]";
 	private String XPathRecordsLabel = "//h1[@class='srp-controls__count-heading']";
-	private String XPathSort = "//div[@id='w4-w3']/button"; 
+	private String XPathSort = "//div[@id='w4-w3']/button";
+	private String XPathProductListToBuy = "//span[contains(@class,'purchaseOptions')][text()='Buy It Now']//ancestor::li[contains(@id, 'srp-river-results-listing')]";
 	
 
 	private String BrandFilterValue = "";
-	
-	//---- Controls Definitions ----//
-	TextControl textControl;
-	CheckboxControl checkboxControl;
-	LabelControl labelControl;
 	
 
 	public EbayTestPage() {
@@ -106,10 +97,26 @@ public class EbayTestPage extends Page
 		
     }
 	
-	@And("^The Price of First \"([^\"]*)\" Records are printed$")
-    public void print_records_price(int Records) throws Throwable {
-
-		
+    @When("^User buy The first \"([^\"]*)\" Records$")
+    public void user_buy_the_first_something_records(String records) throws Throwable {
+    	
+    	System.out.println("UNO");
+    	waitUntilElementExists("(//span[contains(@class,'purchaseOptions')])[1]");
+    	System.out.println("DOS");
+    	List<WebElement> productList = getListOfElements(XPathProductListToBuy);
+    	System.out.println(productList);
+    	for (WebElement product:productList) {
+    		
+    		product.click();
+    		Thread.sleep(5000);
+    		waitUntilElementExists("//div[@id='vi_zoom_trigger_mask']");
+    		returnToPreviousPage();
+    		
+    		System.out.println("TRES");
+    		
+    	
+    	}
+    	
     }	
 	
 }

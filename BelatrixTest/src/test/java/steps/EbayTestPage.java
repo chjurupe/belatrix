@@ -34,7 +34,8 @@ public class EbayTestPage extends Page
 	//private String XPathProductListToBuy = "//span[contains(@class,'purchaseOptions')][text()='Buy It Now']//ancestor::li[contains(@id, 'srp-river-results-listing')]";
 	private String XPathAddToShoppingCartbtn = "//*[@id='isCartBtn_btn']";
 	private String XPathProdBuyItNowItem = "((//span[contains(@class,'purchaseOptions')][contains(text(),'Cómpralo ahora')]|//span[contains(@class,'purchaseOptions')][contains(text(),'Buy It Now')])//ancestor::li[contains(@id, 'srp-river-results-listing')]//img)[INDEXTOREPLACE]";
-	private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() <= numberproducts]";
+	//private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() <= numberproducts]";
+	private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() = numberproducts]";
 	
 	private String BrandFilterValue = "";
 	private List<WebElement> productList;
@@ -103,22 +104,34 @@ public class EbayTestPage extends Page
 		
     }
 	
-    @When("^User Take the first \"([^\"]*)\" products$")
+    @When("^User Take the first \"([^\"]*)\" products to print their price in console$")
     public void user_take_the_first_something_products_with_their_prices_and_print_them_in_console(int numberproducts) throws Throwable {
-       
-    	String ProductListXPath = XPathProductTakenList.replace("numberproducts", Integer.toString(numberproducts));
-    	productList = getListOfElements(ProductListXPath);
     	
+    	System.out.println("********** Report  **********");
+    	for(int i=1; i<=numberproducts; i++) {
+       
+    	String ProductListXPath = XPathProductTakenList.replace("numberproducts", Integer.toString(i));
+
+    	WebElement productItemName = getListOfElement(ProductListXPath + "//h3[contains(@class,'s-item__title')]");
+    	String ProductName = productItemName.getText();
+
+    	WebElement productItemPrice = getListOfElement(ProductListXPath + "//div//span[@class='s-item__price']");
+		String Price = productItemPrice.getText();
+
+		System.out.println("Product Name: " + ProductName + " Price: " + Price);
+    	
+    	}
     }
     
     @Then("^Their prices are printed in console$")
     public void their_prices_are_printed_in_console() throws Throwable {
     	//System.out.println(productList);
+    	/*
     	for (WebElement webElement : productList) {
     		String ProductName = webElement.findElement(By.xpath("//h3[@class='s-item__title']")).getText();
     		String Price = webElement.findElement(By.xpath("//div//span[@class='s-item__price']")).getText();
     		System.out.println("Product Name: " + ProductName + " Price: " + Price);
- 		}
+ 		}*/
     
     }
 	

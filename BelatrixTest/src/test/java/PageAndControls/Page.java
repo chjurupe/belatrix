@@ -40,9 +40,13 @@ public class Page {
 	public List<WebElement> getListOfElements(String XPath) {
 		
 		return webdriver.findElements(By.xpath(XPath));
-		
 	}
 	
+	public WebElement getListOfElement(String XPath) {
+		
+		return webdriver.findElement(By.xpath(XPath));
+	}
+
 	public void returnToPreviousPage () {
 		
 		webdriver.navigate().back();

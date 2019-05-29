@@ -1,11 +1,13 @@
 package steps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import Data.Product;
 import PageAndControls.ButtonControl;
 import PageAndControls.CheckboxControl;
 import PageAndControls.LabelControl;
@@ -36,9 +38,11 @@ public class EbayTestPage extends Page
 	private String XPathProdBuyItNowItem = "((//span[contains(@class,'purchaseOptions')][contains(text(),'Cómpralo ahora')]|//span[contains(@class,'purchaseOptions')][contains(text(),'Buy It Now')])//ancestor::li[contains(@id, 'srp-river-results-listing')]//img)[INDEXTOREPLACE]";
 	//private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() <= numberproducts]";
 	private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() = numberproducts]";
+	private String XPathProductTitle = "//h3[contains(@class,'s-item__title')]";
+	private String XPathProductPrice = "//div//span[@class='s-item__price']";
 	
 	private String BrandFilterValue = "";
-	private List<WebElement> productList;
+	private List<Product> productList;
 	
 
 	public EbayTestPage() {
@@ -107,18 +111,26 @@ public class EbayTestPage extends Page
     @When("^User Take the first \"([^\"]*)\" products to print their price in console$")
     public void user_take_the_first_something_products_with_their_prices_and_print_them_in_console(int numberproducts) throws Throwable {
     	
+    	List<Product> productList = new ArrayList<Product>();
+    	
     	System.out.println("********** Report  **********");
     	for(int i=1; i<=numberproducts; i++) {
        
     	String ProductListXPath = XPathProductTakenList.replace("numberproducts", Integer.toString(i));
 
-    	WebElement productItemName = getListOfElement(ProductListXPath + "//h3[contains(@class,'s-item__title')]");
+    	WebElement productItemName = getListOfElement(ProductListXPath + XPathProductTitle);
     	String ProductName = productItemName.getText();
 
-    	WebElement productItemPrice = getListOfElement(ProductListXPath + "//div//span[@class='s-item__price']");
+    	WebElement productItemPrice = getListOfElement(ProductListXPath + XPathProductPrice);
 		String Price = productItemPrice.getText();
 
 		System.out.println("Product Name: " + ProductName + " Price: " + Price);
+		
+		Product product = new Product();
+		product.ProductTitle = ProductName;
+		product.ProductPrice = Price;
+		
+		productList.add(product);
     	
     	}
     }

@@ -1,7 +1,10 @@
 package steps;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -108,12 +111,11 @@ public class EbayTestPage extends Page
 		
     }
 	
-    @When("^User Take the first \"([^\"]*)\" products to print their price in console$")
+    @When("^User Take the first \"([^\"]*)\" products$")
     public void user_take_the_first_something_products_with_their_prices_and_print_them_in_console(int numberproducts) throws Throwable {
     	
-    	List<Product> productList = new ArrayList<Product>();
+    	productList = new ArrayList<Product>();
     	
-    	System.out.println("********** Report  **********");
     	for(int i=1; i<=numberproducts; i++) {
        
     	String ProductListXPath = XPathProductTakenList.replace("numberproducts", Integer.toString(i));
@@ -124,8 +126,6 @@ public class EbayTestPage extends Page
     	WebElement productItemPrice = getListOfElement(ProductListXPath + XPathProductPrice);
 		String Price = productItemPrice.getText();
 
-		System.out.println("Product Name: " + ProductName + " Price: " + Price);
-		
 		Product product = new Product();
 		product.ProductTitle = ProductName;
 		product.ProductPrice = Price;
@@ -137,13 +137,11 @@ public class EbayTestPage extends Page
     
     @Then("^Their prices are printed in console$")
     public void their_prices_are_printed_in_console() throws Throwable {
-    	//System.out.println(productList);
-    	/*
-    	for (WebElement webElement : productList) {
-    		String ProductName = webElement.findElement(By.xpath("//h3[@class='s-item__title']")).getText();
-    		String Price = webElement.findElement(By.xpath("//div//span[@class='s-item__price']")).getText();
-    		System.out.println("Product Name: " + ProductName + " Price: " + Price);
- 		}*/
+
+    	System.out.println("********** Report  **********");
+    	for (Product producto : productList) {
+    		System.out.println("Product Name: " + producto.ProductTitle + " Price: " + producto.ProductPrice);
+ 		}
     
     }
 	
@@ -166,6 +164,40 @@ public class EbayTestPage extends Page
     		returnToPreviousPage();
     	}
     	
-    }	
+    }
+	
+    @And("^Also print the list by product name ascendant$")
+    public void also_print_the_list_by_product_name_ascendant() throws Throwable {
+
+    	Collections.sort(productList, new Comparator<Product>() {
+    		  public int compare(Product u1, Product u2) {
+    		    return u1.ProductTitle.compareTo(u2.ProductTitle);
+    		  }
+    		});
+    	
+    	System.out.println("********** Report by Product Name Ascendant **********");
+    	for (Product producto : productList) {
+    		System.out.println("Product Name: " + producto.ProductTitle + " Price: " + producto.ProductPrice);
+ 		}
+    	
+    	
+    }
+    
+    @And("^Also print the list by product price descendant$")
+    public void also_print_the_list_by_product_price_ascendant() throws Throwable {
+
+    	Collections.sort(productList, new Comparator<Product>() {
+    		  public int compare(Product u1, Product u2) {
+    		    return u2.ProductPrice.compareTo(u1.ProductPrice);
+    		  }
+    		});
+    	
+    	System.out.println("********** Report by Product price descendant **********");
+    	for (Product producto : productList) {
+    		System.out.println("Product Name: " + producto.ProductTitle + " Price: " + producto.ProductPrice);
+ 		}
+    	
+    	
+    }
 	
 }

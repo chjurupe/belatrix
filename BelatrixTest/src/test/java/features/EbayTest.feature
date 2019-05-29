@@ -11,9 +11,11 @@ Then Ebay Page displays the list
 And Number of results is printed
 When User orber by "<OrderTypeSelected>"
 Then Ebay Page displays the list
-When User buy The first "<Records>" Records
+When User Take the first "<NumberProducts>" products
+Then Their prices are printed in console
+When Assert the order taking the first "<Records>" results
 #And The Price of First "<Records>" Records are printed
 
 Examples:
-|ItemToSearch	|BrandSelected	|StatusSelected		|OrderTypeSelected					|Records|
-|Shoes			|PUMA			|Nuevo				|Precio + Envío: más bajo primero	|5		|
+|ItemToSearch	|BrandSelected	|StatusSelected		|OrderTypeSelected					|NumberProducts |Records|
+|Shoes			|PUMA			|Nuevo				|Precio + Envío: más bajo primero	|5				|5		|

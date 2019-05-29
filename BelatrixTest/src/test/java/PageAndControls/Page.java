@@ -16,11 +16,13 @@ public class Page {
 	protected TextControl textControl;
 	protected CheckboxControl checkboxControl;
 	protected LabelControl labelControl;
+	protected ButtonControl buttonControl;
 	
 	protected final WebDriver webdriver;
 	
 	public Page() {
-		System.setProperty("webdriver.chrome.driver","C:\\WorkSpaceQA\\BelatrixTest\\chromedriver\\chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver","C:\\WorkSpaceQA\\BelatrixTest\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver","..\\BelatrixTest\\chromedriver\\chromedriver.exe");
 		this.webdriver = new ChromeDriver();
 		this.webdriver.manage().window().maximize();
 	}

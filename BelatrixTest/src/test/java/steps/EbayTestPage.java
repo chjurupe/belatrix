@@ -3,7 +3,10 @@ package steps;
 import java.util.List;
 
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import PageAndControls.ButtonControl;
 import PageAndControls.CheckboxControl;
 import PageAndControls.LabelControl;
 import PageAndControls.Page;
@@ -28,10 +31,13 @@ public class EbayTestPage extends Page
 	private String XPathStatusSearchText = "//h3[text()='Estado']//ancestor::li[1]//span[text()='REPLACEBYSTATUS']//ancestor::li[1]";
 	private String XPathRecordsLabel = "//h1[@class='srp-controls__count-heading']";
 	private String XPathSort = "//div[@id='w4-w3']/button";
-	private String XPathProductListToBuy = "//span[contains(@class,'purchaseOptions')][text()='Buy It Now']//ancestor::li[contains(@id, 'srp-river-results-listing')]";
+	//private String XPathProductListToBuy = "//span[contains(@class,'purchaseOptions')][text()='Buy It Now']//ancestor::li[contains(@id, 'srp-river-results-listing')]";
+	private String XPathAddToShoppingCartbtn = "//*[@id='isCartBtn_btn']";
+	private String XPathProdBuyItNowItem = "((//span[contains(@class,'purchaseOptions')][contains(text(),'Cómpralo ahora')]|//span[contains(@class,'purchaseOptions')][contains(text(),'Buy It Now')])//ancestor::li[contains(@id, 'srp-river-results-listing')]//img)[INDEXTOREPLACE]";
+	private String XPathProductTakenList = "(//div[@class='s-item__info clearfix'])[position() <= numberproducts]";
 	
-
 	private String BrandFilterValue = "";
+	private List<WebElement> productList;
 	
 
 	public EbayTestPage() {
@@ -97,24 +103,42 @@ public class EbayTestPage extends Page
 		
     }
 	
-    @When("^User buy The first \"([^\"]*)\" Records$")
-    public void user_buy_the_first_something_records(String records) throws Throwable {
+    @When("^User Take the first \"([^\"]*)\" products$")
+    public void user_take_the_first_something_products_with_their_prices_and_print_them_in_console(int numberproducts) throws Throwable {
+       
+    	String ProductListXPath = XPathProductTakenList.replace("numberproducts", Integer.toString(numberproducts));
+    	productList = getListOfElements(ProductListXPath);
     	
-    	System.out.println("UNO");
-    	waitUntilElementExists("(//span[contains(@class,'purchaseOptions')])[1]");
-    	System.out.println("DOS");
-    	List<WebElement> productList = getListOfElements(XPathProductListToBuy);
-    	System.out.println(productList);
-    	for (WebElement product:productList) {
+    }
+    
+    @Then("^Their prices are printed in console$")
+    public void their_prices_are_printed_in_console() throws Throwable {
+    	//System.out.println(productList);
+    	for (WebElement webElement : productList) {
+    		String ProductName = webElement.findElement(By.xpath("//h3[@class='s-item__title']")).getText();
+    		String Price = webElement.findElement(By.xpath("//div//span[@class='s-item__price']")).getText();
+    		System.out.println("Product Name: " + ProductName + " Price: " + Price);
+ 		}
+    
+    }
+	
+	@When("^Assert the order taking the first \"([^\"]*)\" results$")
+    public void user_buy_the_first_something_records(int records) throws Throwable {
+    	
+    	
+    	for(int i=1; i<records; i++) {
+    	
     		
-    		product.click();
-    		Thread.sleep(5000);
-    		waitUntilElementExists("//div[@id='vi_zoom_trigger_mask']");
+    		String ProductXPath = XPathProdBuyItNowItem.replace("INDEXTOREPLACE", Integer.toString(i));
+    		buttonControl = new ButtonControl(webdriver, ProductXPath);
+    		buttonControl.click();
+    		
+    		buttonControl = new ButtonControl(webdriver, XPathAddToShoppingCartbtn);
+    		buttonControl.click();
+    	
     		returnToPreviousPage();
-    		
-    		System.out.println("TRES");
-    		
     	
+    		returnToPreviousPage();
     	}
     	
     }	
